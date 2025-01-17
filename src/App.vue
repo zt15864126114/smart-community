@@ -7,9 +7,9 @@
       </div>
       
       <el-menu
+        :default-active="route.path"
+        class="el-menu-vertical"
         router
-        :default-active="$route.path"
-        class="side-menu"
         background-color="#001529"
         text-color="rgba(255,255,255,0.65)"
         active-text-color="#fff">
@@ -40,6 +40,14 @@
         <el-menu-item index="/smart-community/settings">
           <el-icon><Setting /></el-icon>
           <span>系统设置</span>
+        </el-menu-item>
+        <el-menu-item index="/smart-community/visitor">
+          <el-icon><User /></el-icon>
+          <span>访客管理</span>
+        </el-menu-item>
+        <el-menu-item index="/smart-community/vehicle">
+          <el-icon><Van /></el-icon>
+          <span>车辆管理</span>
         </el-menu-item>
       </el-menu>
     </el-aside>
@@ -75,11 +83,7 @@
       </el-header>
       
       <el-main class="main">
-        <router-view v-slot="{ Component }">
-          <transition name="fade" mode="out-in">
-            <component :is="Component" />
-          </transition>
-        </router-view>
+        <router-view :key="route.path"></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -96,7 +100,8 @@ import {
   Fold,
   Expand,
   User,
-  Setting
+  Setting,
+  Van
 } from '@element-plus/icons-vue'
 
 const route = useRoute()
@@ -104,10 +109,15 @@ const isCollapse = ref(false)
 
 const currentRoute = computed(() => {
   const routeMap = {
-    '/dashboard': '数据概览',
-    '/monitoring': '高空抛物监控',
-    '/elevator': '电梯管理',
-    '/alarm': '告警管理'
+    '/smart-community/dashboard': '数据概览',
+    '/smart-community/monitoring': '视频监控',
+    '/smart-community/elevator': '电梯管理',
+    '/smart-community/alarm': '告警管理',
+    '/smart-community/device': '设备管理',
+    '/smart-community/users': '用户管理',
+    '/smart-community/settings': '系统设置',
+    '/smart-community/visitor': '访客管理',
+    '/smart-community/vehicle': '车辆管理'
   }
   return routeMap[route.path] || '首页'
 })

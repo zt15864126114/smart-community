@@ -8,6 +8,9 @@ import UserManagement from '../components/UserManagement.vue'
 import SystemSettings from '../components/SystemSettings.vue'
 import VideoMonitoring from '../components/VideoMonitoring.vue'
 import MonitoringDashboard from '../components/MonitoringDashboard.vue'
+import ElevatorMonitoring from '../components/ElevatorMonitoring.vue'
+import VisitorManagement from '../components/VisitorManagement.vue'
+import VehicleManagement from '../components/VehicleManagement.vue'
 
 const routes = [
   {
@@ -58,6 +61,21 @@ const routes = [
     path: '/smart-community/dashboard',
     name: 'Dashboard',
     component: MonitoringDashboard
+  },
+  {
+    path: '/smart-community/elevator',
+    name: 'Elevator',
+    component: ElevatorMonitoring
+  },
+  {
+    path: '/smart-community/visitor',
+    name: 'Visitor',
+    component: VisitorManagement
+  },
+  {
+    path: '/smart-community/vehicle',
+    name: 'Vehicle',
+    component: VehicleManagement
   }
 ]
 

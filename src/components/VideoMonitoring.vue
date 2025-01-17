@@ -231,17 +231,37 @@ const treeData = [
     children: [
       {
         id: 11,
-        label: '1号摄像头',
+        label: 'A1-高空抛物',
         type: 'camera',
         icon: 'Monitor',
-        status: '在线'
+        status: '在线',
+        location: 'A栋1单元西侧',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
       },
       {
         id: 12,
-        label: '2号摄像头',
+        label: 'A2-人流检测',
         type: 'camera',
         icon: 'Monitor',
-        status: '离线'
+        status: '在线',
+        location: 'A栋1单元大堂',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      },
+      {
+        id: 13,
+        label: 'A3-车库入口',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '离线',
+        location: 'A栋地下车库入口',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264',
+        lastOnline: '2024-03-20 14:30:15'
       }
     ]
   },
@@ -252,17 +272,94 @@ const treeData = [
     children: [
       {
         id: 21,
-        label: '3号摄像头',
+        label: 'B1-高空抛物',
         type: 'camera',
         icon: 'Monitor',
-        status: '在线'
+        status: '在线',
+        location: 'B栋2单元东侧',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
       },
       {
         id: 22,
-        label: '4号摄像头',
+        label: 'B2-人流检测',
         type: 'camera',
         icon: 'Monitor',
-        status: '在线'
+        status: '在线',
+        location: 'B栋大堂',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      }
+    ]
+  },
+  {
+    id: 3,
+    label: 'C栋',
+    icon: 'FolderOpened',
+    children: [
+      {
+        id: 31,
+        label: 'C1-高空抛物',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: 'C栋3单元北侧',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      },
+      {
+        id: 32,
+        label: 'C2-广场监控',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: 'C栋楼下广场',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      }
+    ]
+  },
+  {
+    id: 4,
+    label: '公共区域',
+    icon: 'FolderOpened',
+    children: [
+      {
+        id: 41,
+        label: 'D1-小区大门',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: '小区主入口',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      },
+      {
+        id: 42,
+        label: 'D2-停车场',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: '地面停车场',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      },
+      {
+        id: 43,
+        label: 'D3-儿童乐园',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: '中心花园',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
       }
     ]
   }
@@ -287,36 +384,38 @@ const currentPreset = ref('')
 
 // 预置点列表
 const presetPoints = [
-  { value: '1', label: '预置点1' },
-  { value: '2', label: '预置点2' },
-  { value: '3', label: '预置点3' },
-  { value: '4', label: '预置点4' }
+  { value: '1', label: '大门入口' },
+  { value: '2', label: '垃圾投放处' },
+  { value: '3', label: '消防通道' },
+  { value: '4', label: '电动车充电处' },
+  { value: '5', label: '快递柜' },
+  { value: '6', label: '车库入口' }
 ]
 
 // 处理设备树节点点击
 const handleNodeClick = (data) => {
-  if (data.type === 'camera' && data.status === '在线') {
+  if (data.type === 'camera') {
+    if (data.status === '离线') {
+      ElMessage.warning(`${data.label}当前离线，最后在线时间：${data.lastOnline}`)
+      return
+    }
+    
     if (currentVideoIndex.value !== null && !videos.value[currentVideoIndex.value]) {
       videos.value[currentVideoIndex.value] = {
         id: data.id,
         name: data.label,
-        location: getLocationPath(data),
-        status: 'playing'
+        location: data.location,
+        resolution: data.resolution,
+        frameRate: data.frameRate,
+        streamType: data.streamType,
+        status: 'playing',
+        startTime: new Date().toLocaleString(),
+        recordStatus: true,
+        ptzEnabled: true
       }
       ElMessage.success(`已添加到窗口 ${currentVideoIndex.value + 1}`)
     }
   }
-}
-
-// 获取摄像头位置完整路径
-const getLocationPath = (node) => {
-  let path = []
-  let current = node
-  while (current) {
-    path.unshift(current.label)
-    current = current.parent
-  }
-  return path.join(' / ')
 }
 
 // 处理视频窗口点击
@@ -367,17 +466,32 @@ const stopAllVideo = () => {
 
 // 云台控制
 const ptzControl = (direction) => {
-  ElMessage.success(`云台控制：${direction}`)
+  if (currentVideoIndex.value !== null && videos.value[currentVideoIndex.value]) {
+    const camera = videos.value[currentVideoIndex.value]
+    ElMessage.success(`${camera.name} - 云台控制：${direction}`)
+    // 模拟云台控制延迟
+    setTimeout(() => {
+      ElMessage.success(`${camera.name} - ${direction}操作完成`)
+    }, 500)
+  }
 }
 
 // 调用预置点
 const callPreset = () => {
-  ElMessage.success(`调用预置点：${currentPreset.value}`)
+  if (currentVideoIndex.value !== null && videos.value[currentVideoIndex.value]) {
+    const camera = videos.value[currentVideoIndex.value]
+    const preset = presetPoints.find(p => p.value === currentPreset.value)
+    ElMessage.success(`${camera.name} - 调用预置点：${preset.label}`)
+  }
 }
 
 // 保存预置点
 const savePreset = () => {
-  ElMessage.success(`保存预置点：${currentPreset.value}`)
+  if (currentVideoIndex.value !== null && videos.value[currentVideoIndex.value]) {
+    const camera = videos.value[currentVideoIndex.value]
+    const preset = presetPoints.find(p => p.value === currentPreset.value)
+    ElMessage.success(`${camera.name} - 设置预置点：${preset.label}`)
+  }
 }
 </script>
 

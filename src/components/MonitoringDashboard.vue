@@ -200,25 +200,29 @@ const statistics = ref([
     title: '今日告警',
     value: '28',
     icon: 'Warning',
-    type: 'danger'
+    type: 'danger',
+    change: '+5'
   },
   {
     title: '待处理',
     value: '5',
     icon: 'Bell',
-    type: 'warning'
+    type: 'warning',
+    change: '-2'
   },
   {
     title: '在线设备',
-    value: '42',
+    value: '42/45',
     icon: 'Connection',
-    type: 'success'
+    type: 'success',
+    change: '+1'
   },
   {
     title: '覆盖区域',
     value: '12',
     icon: 'Location',
-    type: 'primary'
+    type: 'primary',
+    change: '0'
   }
 ])
 
@@ -226,26 +230,106 @@ const statistics = ref([
 const alarms = ref([
   {
     id: 1,
-    time: '2024-03-20 14:30:00',
+    time: '2024-03-20 14:30:25',
     type: '高空抛物',
-    location: 'A栋1单元',
+    location: 'A栋1单元西侧',
     status: '未处理',
-    snapshot: 'path/to/image.jpg',
-    description: '发现高空抛物行为，疑似生活垃圾',
-    suggestion: '及时清理并排查来源，加强巡查'
+    snapshot: '/mock/alarm1.jpg',
+    description: '发现高空抛物行为，疑似生活垃圾，已触发声光警报',
+    suggestion: '1. 及时清理抛物物品\n2. 排查可疑楼层\n3. 加强巡查力度'
   },
-  // ... 更多告警数据
+  {
+    id: 2,
+    time: '2024-03-20 14:15:12',
+    type: '人员闯入',
+    location: 'B栋地下车库',
+    status: '处理中',
+    snapshot: '/mock/alarm2.jpg',
+    description: '检测到可疑人员在地下车库徘徊，未佩戴访客证',
+    suggestion: '1. 保安巡查确认\n2. 核实人员身份\n3. 做好记录登记'
+  },
+  {
+    id: 3,
+    time: '2024-03-20 13:45:30',
+    type: '异常聚集',
+    location: 'C栋楼下广场',
+    status: '已处理',
+    snapshot: '/mock/alarm3.jpg',
+    description: '检测到5人以上聚集，持续时间超过15分钟',
+    suggestion: '1. 现场了解情况\n2. 必要时进行疏导\n3. 保持场地秩序'
+  },
+  {
+    id: 4,
+    time: '2024-03-20 13:20:18',
+    type: '高空抛物',
+    location: 'D栋3单元',
+    status: '已处理',
+    snapshot: '/mock/alarm4.jpg',
+    description: '监测到高空抛物行为，物品疑似烟头',
+    suggestion: '1. 清理现场\n2. 排查源头\n3. 加强宣传教育'
+  },
+  {
+    id: 5,
+    time: '2024-03-20 12:55:42',
+    type: '异常聚集',
+    location: 'E栋电梯口',
+    status: '已处理',
+    snapshot: '/mock/alarm5.jpg',
+    description: '电梯口处检测到多人聚集，可能影响通行',
+    suggestion: '1. 及时疏导\n2. 保持通道畅通\n3. 注意秩序维护'
+  }
 ])
 
 // 摄像头数据
 const cameras = ref([
   {
     id: 1,
-    name: '1号摄像头',
-    location: 'A栋1单元',
-    online: true
+    name: 'A1-高空抛物',
+    location: 'A栋1单元西侧',
+    online: true,
+    type: '高空抛物',
+    lastUpdate: '2024-03-20 14:35:12'
   },
-  // ... 更多摄像头数据
+  {
+    id: 2,
+    name: 'A2-人流检测',
+    location: 'A栋1单元大堂',
+    online: true,
+    type: '人流检测',
+    lastUpdate: '2024-03-20 14:35:10'
+  },
+  {
+    id: 3,
+    name: 'B1-车库入口',
+    location: 'B栋地下车库',
+    online: true,
+    type: '车辆检测',
+    lastUpdate: '2024-03-20 14:35:08'
+  },
+  {
+    id: 4,
+    name: 'B2-高空抛物',
+    location: 'B栋2单元东侧',
+    online: false,
+    type: '高空抛物',
+    lastUpdate: '2024-03-20 14:30:00'
+  },
+  {
+    id: 5,
+    name: 'C1-广场监控',
+    location: 'C栋楼下广场',
+    online: true,
+    type: '人流检测',
+    lastUpdate: '2024-03-20 14:35:15'
+  },
+  {
+    id: 6,
+    name: 'D1-高空抛物',
+    location: 'D栋3单元北侧',
+    online: true,
+    type: '高空抛物',
+    lastUpdate: '2024-03-20 14:35:05'
+  }
 ])
 
 const hasNewAlarm = ref(true)
@@ -256,7 +340,19 @@ const playProgress = ref(0)
 
 const alarmForm = ref({
   method: '',
-  description: ''
+  description: '',
+  handler: '张工',
+  handleTime: new Date().toLocaleString(),
+  followUp: false,
+  priority: 'high'
+})
+
+// 视频回放数据
+const videoPlayback = ref({
+  startTime: '2024-03-20 14:25:00',
+  endTime: '2024-03-20 14:35:00',
+  duration: '00:10:00',
+  currentTime: '00:00:00'
 })
 
 // 过滤摄像头列表
@@ -281,15 +377,34 @@ const getAlarmType = (type) => {
 const handleAlarm = (alarm) => {
   alarmForm.value = {
     method: '',
-    description: ''
+    description: '',
+    handler: '张工',
+    handleTime: new Date().toLocaleString(),
+    followUp: false,
+    priority: alarm.type === '高空抛物' ? 'high' : 'medium',
+    alarmId: alarm.id,
+    alarmType: alarm.type,
+    location: alarm.location
   }
   dialogVisible.value = true
 }
 
 // 提交告警处理
 const submitAlarmHandle = () => {
-  ElMessage.success('处理成功')
-  dialogVisible.value = false
+  const { alarmId, handler, method, description } = alarmForm.value
+  // 模拟API调用
+  setTimeout(() => {
+    const alarm = alarms.value.find(a => a.id === alarmId)
+    if (alarm) {
+      alarm.status = '已处理'
+      alarm.handler = handler
+      alarm.handleMethod = method
+      alarm.handleDescription = description
+      alarm.handleTime = new Date().toLocaleString()
+    }
+    ElMessage.success('告警处理成功')
+    dialogVisible.value = false
+  }, 500)
 }
 
 // 查看视频回放
@@ -300,10 +415,10 @@ const viewVideo = (alarm) => {
 // 查看摄像头
 const viewCamera = (camera) => {
   if (!camera.online) {
-    ElMessage.warning('该摄像头当前离线')
+    ElMessage.warning(`${camera.name}当前离线，最后在线时间：${camera.lastUpdate}`)
     return
   }
-  ElMessage.success(`正在查看${camera.name}`)
+  ElMessage.success(`正在查看${camera.name}，位于${camera.location}`)
 }
 </script>
 

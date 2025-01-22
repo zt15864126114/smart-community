@@ -11,6 +11,7 @@ import MonitoringDashboard from '../components/MonitoringDashboard.vue'
 import ElevatorMonitoring from '../components/ElevatorMonitoring.vue'
 import VisitorManagement from '../components/VisitorManagement.vue'
 import VehicleManagement from '../components/VehicleManagement.vue'
+import VideoShare from "../components/VideoShare.vue";
 
 const routes = [
   {
@@ -76,6 +77,11 @@ const routes = [
     path: '/smart-community/vehicle',
     name: 'Vehicle',
     component: VehicleManagement
+  },
+  {
+    path: '/smart-community/videoshare',
+    name: 'VideoShare',
+    component: VideoShare
   }
 ]
 

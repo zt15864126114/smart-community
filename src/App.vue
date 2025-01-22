@@ -21,6 +21,10 @@
           <el-icon><VideoCamera /></el-icon>
           <span>视频广场</span>
         </el-menu-item>
+        <el-menu-item index="/smart-community/videoshare">
+          <el-icon><Share /></el-icon>
+          <span>视频共享</span>
+        </el-menu-item>
         <el-menu-item index="/smart-community/elevator">
           <el-icon><Connection /></el-icon>
           <span>电梯管理</span>
@@ -101,7 +105,8 @@ import {
   Expand,
   User,
   Setting,
-  Van
+  Van,
+  Share
 } from '@element-plus/icons-vue'
 
 const route = useRoute()
@@ -117,7 +122,8 @@ const currentRoute = computed(() => {
     '/smart-community/users': '用户管理',
     '/smart-community/settings': '系统设置',
     '/smart-community/visitor': '访客管理',
-    '/smart-community/vehicle': '车辆管理'
+    '/smart-community/vehicle': '车辆管理',
+    '/smart-community/videoshare': '视频共享'
   }
   return routeMap[route.path] || '首页'
 })

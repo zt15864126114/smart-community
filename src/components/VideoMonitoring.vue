@@ -362,6 +362,175 @@ const treeData = [
         streamType: 'H.264'
       }
     ]
+  },
+  {
+    id: 5,
+    label: 'E栋',
+    icon: 'FolderOpened',
+    children: [
+      {
+        id: 51,
+        label: 'E1-高空抛物',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: 'E栋1单元东侧',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      },
+      {
+        id: 52,
+        label: 'E2-人流检测',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: 'E栋大堂',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      },
+      {
+        id: 53,
+        label: 'E3-电梯监控',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '离线',
+        location: 'E栋1单元电梯',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264',
+        lastOnline: '2024-03-20 16:30:15'
+      }
+    ]
+  },
+  {
+    id: 6,
+    label: 'F栋',
+    icon: 'FolderOpened',
+    children: [
+      {
+        id: 61,
+        label: 'F1-高空抛物',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: 'F栋2单元西侧',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      },
+      {
+        id: 62,
+        label: 'F2-人流检测',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: 'F栋大堂',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      },
+      {
+        id: 63,
+        label: 'F3-楼道监控',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: 'F栋1单元一层',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      }
+    ]
+  },
+  {
+    id: 7,
+    label: 'G栋',
+    icon: 'FolderOpened',
+    children: [
+      {
+        id: 71,
+        label: 'G1-高空抛物',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: 'G栋3单元北侧',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      },
+      {
+        id: 72,
+        label: 'G2-人流检测',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '离线',
+        location: 'G栋大堂',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264',
+        lastOnline: '2024-03-20 17:45:30'
+      }
+    ]
+  },
+  {
+    id: 8,
+    label: 'H栋',
+    icon: 'FolderOpened',
+    children: [
+      {
+        id: 81,
+        label: 'H1-高空抛物',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: 'H栋1单元东侧',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      },
+      {
+        id: 82,
+        label: 'H2-电梯监控',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: 'H栋1单元电梯',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      }
+    ]
+  },
+  {
+    id: 9,
+    label: 'I栋',
+    icon: 'FolderOpened',
+    children: [
+      {
+        id: 91,
+        label: 'I1-高空抛物',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: 'I栋2单元西侧',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      },
+      {
+        id: 92,
+        label: 'I2-人流检测',
+        type: 'camera',
+        icon: 'Monitor',
+        status: '在线',
+        location: 'I栋大堂',
+        resolution: '1920×1080',
+        frameRate: '25fps',
+        streamType: 'H.264'
+      }
+    ]
   }
 ]
 

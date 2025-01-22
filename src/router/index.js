@@ -12,6 +12,7 @@ import ElevatorMonitoring from '../components/ElevatorMonitoring.vue'
 import VisitorManagement from '../components/VisitorManagement.vue'
 import VehicleManagement from '../components/VehicleManagement.vue'
 import VideoShare from "../components/VideoShare.vue";
+import EventReview from "../components/EventReview.vue";
 
 const routes = [
   {
@@ -82,7 +83,12 @@ const routes = [
     path: '/smart-community/videoshare',
     name: 'VideoShare',
     component: VideoShare
-  }
+  },
+  {
+    path: '/smart-community/eventreview',
+    name: 'EventReview',
+    component: EventReview
+  },
 ]
 
 export const router = createRouter({

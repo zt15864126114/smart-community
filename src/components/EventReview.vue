@@ -157,6 +157,53 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { ElMessage } from 'element-plus'
+import { eventTypes, eventLevels, generateEvents } from './data'
+
+// 筛选状态
+const dateRange = ref([])
+const filterType = ref('')
+const filterLevel = ref('')
+const searchKeyword = ref('')
+const currentEvent = ref(null)
+
+// 生成事件数据
+const events = ref(generateEvents())
+
+// 过滤后的事件列表
+const filteredEvents = computed(() => {
+  return events.value.filter(event => {
+    // 关键词搜索
+    const matchKeyword = !searchKeyword.value || 
+      event.title.toLowerCase().includes(searchKeyword.value.toLowerCase()) ||
+      event.location.toLowerCase().includes(searchKeyword.value.toLowerCase()) ||
+      event.description.toLowerCase().includes(searchKeyword.value.toLowerCase())
+    
+    // 类型筛选
+    const matchType = !filterType.value || event.type.value === filterType.value
+    
+    // 等级筛选
+    const matchLevel = !filterLevel.value || event.level.value === filterLevel.value
+    
+    // 日期筛选
+    const matchDate = !dateRange.value || !dateRange.value.length || 
+      (new Date(event.time) >= dateRange.value[0] && 
+       new Date(event.time) <= dateRange.value[1])
+    
+    return matchKeyword && matchType && matchLevel && matchDate
+  }).sort((a, b) => new Date(b.time) - new Date(a.time)) // 按时间降序排序
+})
+
+// 处理事件选择
+const handleEventSelect = (event) => {
+  currentEvent.value = event
+}
+
+// 处理日期变化
+const handleDateChange = (dates) => {
+  if (dates) {
+    ElMessage.success('日期范围已更新')
+  }
+}
 
 // 日期快捷选项
 const dateShortcuts = [
@@ -170,6 +217,15 @@ const dateShortcuts = [
     },
   },
   {
+    text: '最近半月',
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 15)
+      return [start, end]
+    },
+  },
+  {
     text: '最近一月',
     value: () => {
       const end = new Date()
@@ -178,123 +234,7 @@ const dateShortcuts = [
       return [start, end]
     },
   },
-  {
-    text: '最近三月',
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-      return [start, end]
-    },
-  },
 ]
-
-// 事件类型
-const eventTypes = [
-  { value: 'throwing', label: '高空抛物', icon: 'Warning' },
-  { value: 'intrusion', label: '非法闯入', icon: 'Lock' },
-  { value: 'fire', label: '火灾隐患', icon: 'Aim' },
-  { value: 'crowd', label: '人员聚集', icon: 'User' },
-  { value: 'vehicle', label: '车辆违停', icon: 'Van' },
-]
-
-// 事件等级
-const eventLevels = [
-  { value: 'urgent', label: '紧急', type: 'danger' },
-  { value: 'high', label: '重要', type: 'warning' },
-  { value: 'normal', label: '普通', type: 'info' },
-]
-
-// 筛选状态
-const dateRange = ref([])
-const filterType = ref('')
-const filterLevel = ref('')
-const searchKeyword = ref('')
-const currentEvent = ref(null)
-
-// 模拟事件数据
-const events = ref([
-  {
-    id: 1,
-    title: 'A栋发生高空抛物事件',
-    type: { value: 'throwing', label: '高空抛物', icon: 'Warning' },
-    level: { value: 'urgent', label: '紧急', type: 'danger' },
-    time: '2024-01-22 14:30:00',
-    duration: '5分钟',
-    location: 'A栋1单元西侧',
-    description: '监控发现有居民从高层向下抛掷物品，可能存在安全隐患',
-    status: { label: '已处理', type: 'success' },
-    videoUrl: '/videos/event1.mp4',
-    records: [
-      {
-        id: 1,
-        time: '2024-01-22 14:35:00',
-        type: 'warning',
-        title: '系统自动报警',
-        content: 'AI识别到高空抛物行为',
-        operator: '系统'
-      },
-      {
-        id: 2,
-        time: '2024-01-22 14:40:00',
-        type: 'primary',
-        title: '安保人员到场',
-        content: '保安已到达现场进行排查',
-        operator: '张三'
-      }
-    ]
-  },
-  {
-    id: 2,
-    title: '地下车库发现可疑人员',
-    type: { value: 'intrusion', label: '非法闯入', icon: 'Lock' },
-    level: { value: 'high', label: '重要', type: 'warning' },
-    time: '2024-01-22 02:15:00',
-    duration: '15分钟',
-    location: 'B区地下停车场',
-    description: '凌晨时分监控发现可疑人员在车库徘徊',
-    status: { label: '处理中', type: 'warning' },
-    videoUrl: '/videos/event2.mp4',
-    records: [
-      {
-        id: 1,
-        time: '2024-01-22 02:20:00',
-        type: 'warning',
-        title: '系统预警',
-        content: '检测到可疑人员活动',
-        operator: '系统'
-      }
-    ]
-  },
-  // 添加更多模拟数据...
-])
-
-// 过滤后的事件列表
-const filteredEvents = computed(() => {
-  return events.value.filter(event => {
-    const matchKeyword = !searchKeyword.value || 
-      event.title.toLowerCase().includes(searchKeyword.value.toLowerCase()) ||
-      event.location.toLowerCase().includes(searchKeyword.value.toLowerCase())
-    
-    const matchType = !filterType.value || event.type.value === filterType.value
-    const matchLevel = !filterLevel.value || event.level.value === filterLevel.value
-    
-    return matchKeyword && matchType && matchLevel
-  })
-})
-
-// 处理事件选择
-const handleEventSelect = (event) => {
-  currentEvent.value = event
-}
-
-// 处理日期变化
-const handleDateChange = (dates) => {
-  if (dates) {
-    // 这里可以添加日期筛选逻辑
-    ElMessage.success('日期范围已更新')
-  }
-}
 </script>
 
 <style scoped>

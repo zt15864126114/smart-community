@@ -13,6 +13,7 @@ import VisitorManagement from '../components/VisitorManagement.vue'
 import VehicleManagement from '../components/VehicleManagement.vue'
 import VideoShare from "../components/VideoShare.vue";
 import EventReview from "../components/EventReview.vue";
+import VideoDispatch from "../components/VideoDispatch.vue";
 
 const routes = [
   {
@@ -88,6 +89,11 @@ const routes = [
     path: '/smart-community/eventreview',
     name: 'EventReview',
     component: EventReview
+  },
+  {
+    path: '/smart-community/videodispatch',
+    name: 'VideoDispatch',
+    component: VideoDispatch
   },
 ]
 

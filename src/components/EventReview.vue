@@ -157,7 +157,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { ElMessage } from 'element-plus'
-import { eventTypes, eventLevels, generateEvents } from './data'
+import { eventTypes, eventLevels, generateEvents } from '../views/events/data.js'
 
 // 筛选状态
 const dateRange = ref([])

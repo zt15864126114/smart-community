@@ -16,6 +16,24 @@ const getRandomTime = (daysAgo) => {
   })
 }
 
+// 安保人员名单
+const securityStaff = [
+  { name: '王建国', title: '安保队长' },
+  { name: '李明', title: '安保主管' },
+  { name: '张伟', title: '安保员' },
+  { name: '刘强', title: '安保员' },
+  { name: '陈勇', title: '安保员' }
+]
+
+// 物业人员名单
+const propertyStaff = [
+  { name: '赵志强', title: '物业经理' },
+  { name: '孙丽', title: '物业主管' },
+  { name: '周红', title: '物业客服' },
+  { name: '吴小明', title: '维修主管' },
+  { name: '郑大勇', title: '维修工程师' }
+]
+
 // 生成处理记录
 const generateRecords = (eventTime, type) => {
   const records = []
@@ -25,33 +43,74 @@ const generateRecords = (eventTime, type) => {
     time: eventTime,
     type: 'warning',
     title: '系统预警',
-    content: '智能系统检测到异常事件',
-    operator: 'AI系统'
+    content: '智能监控系统检测到异常事件',
+    operator: '智慧安防系统'
   })
 
   // 安保人员处理
   const responseTime = new Date(new Date(eventTime).getTime() + 5 * 60 * 1000) // 5分钟后
+  const securityPerson = securityStaff[Math.floor(Math.random() * securityStaff.length)]
   records.push({
     id: 2,
     time: responseTime.toLocaleString('zh-CN'),
     type: 'primary',
     title: '安保响应',
     content: `安保人员已到达${type.label}现场进行处理`,
-    operator: '张安保'
+    operator: `${securityPerson.name}（${securityPerson.title}）`
   })
 
   // 处理完成
   const completeTime = new Date(new Date(eventTime).getTime() + 20 * 60 * 1000) // 20分钟后
+  const propertyPerson = propertyStaff[Math.floor(Math.random() * propertyStaff.length)]
   records.push({
     id: 3,
     time: completeTime.toLocaleString('zh-CN'),
     type: 'success',
     title: '处理完成',
-    content: '现场已处理完毕，恢复正常',
-    operator: '李队长'
+    content: generateHandleContent(type, propertyPerson),
+    operator: `${propertyPerson.name}（${propertyPerson.title}）`
   })
 
+  // 对于某些事件类型，添加后续跟进记录
+  if (['throwing', 'intrusion', 'fire'].includes(type.value)) {
+    const followUpTime = new Date(new Date(eventTime).getTime() + 40 * 60 * 1000) // 40分钟后
+    const manager = propertyStaff.find(p => p.title === '物业经理')
+    records.push({
+      id: 4,
+      time: followUpTime.toLocaleString('zh-CN'),
+      type: 'info',
+      title: '后续跟进',
+      content: generateFollowUpContent(type),
+      operator: `${manager.name}（${manager.title}）`
+    })
+  }
+
   return records
+}
+
+// 生成处理完成内容
+function generateHandleContent(type, staff) {
+  const contents = {
+    throwing: '现场已清理完毕，已做好记录并上报相关部门',
+    intrusion: '可疑人员已被劝离，已加强该区域巡查频次',
+    fire: '消防隐患已排除，已完成安全检查',
+    crowd: '现场秩序已恢复正常，人员已有序疏散',
+    vehicle: '违停车辆已移动，已做好违规记录',
+    elevator: '电梯故障已修复，已完成测试运行',
+    noise: '噪音问题已处理，相关人员已做好沟通',
+    facility: '设施已修复完毕，已恢复正常使用'
+  }
+  return contents[type.value]
+}
+
+// 生成后续跟进内容
+function generateFollowUpContent(type) {
+  const contents = {
+    throwing: '已召开业主委员会会议，讨论加装监控等防范措施',
+    intrusion: '已完成周边安防设施排查，并制定新的巡查方案',
+    fire: '已组织全体业主进行消防安全培训，并更新应急预案'
+  }
+  return contents[type.value]
 }
 
 // 事件类型定义

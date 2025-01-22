@@ -230,7 +230,7 @@ const statistics = ref([
 const alarms = ref([
   {
     id: 1,
-    time: '2024-03-20 14:30:25',
+    time: '2025-01-22 14:30:25',
     type: '高空抛物',
     location: 'A栋1单元西侧',
     status: '未处理',
@@ -240,7 +240,7 @@ const alarms = ref([
   },
   {
     id: 2,
-    time: '2024-03-20 14:15:12',
+    time: '2025-01-22 14:15:12',
     type: '人员闯入',
     location: 'B栋地下车库',
     status: '处理中',
@@ -250,7 +250,7 @@ const alarms = ref([
   },
   {
     id: 3,
-    time: '2024-03-20 13:45:30',
+    time: '2025-01-21 13:45:30',
     type: '异常聚集',
     location: 'C栋楼下广场',
     status: '已处理',
@@ -260,7 +260,7 @@ const alarms = ref([
   },
   {
     id: 4,
-    time: '2024-03-20 13:20:18',
+    time: '2025-01-21 13:20:18',
     type: '高空抛物',
     location: 'D栋3单元',
     status: '已处理',
@@ -270,13 +270,63 @@ const alarms = ref([
   },
   {
     id: 5,
-    time: '2024-03-20 12:55:42',
+    time: '2025-01-20 12:55:42',
     type: '异常聚集',
     location: 'E栋电梯口',
     status: '已处理',
     snapshot: '/mock/alarm5.jpg',
     description: '电梯口处检测到多人聚集，可能影响通行',
     suggestion: '1. 及时疏导\n2. 保持通道畅通\n3. 注意秩序维护'
+  },
+  {
+    id: 6,
+    time: '2025-01-20 14:40:33',
+    type: '车辆占道',
+    location: 'F栋消防通道',
+    status: '未处理',
+    snapshot: '/mock/alarm6.jpg',
+    description: '私家车占用消防通道，影响消防车通行',
+    suggestion: '1. 及时联系车主\n2. 清理占用车辆\n3. 加强停车管理'
+  },
+  {
+    id: 7,
+    time: '2025-01-19 14:25:15',
+    type: '设备故障',
+    location: 'G栋2单元电梯',
+    status: '处理中',
+    snapshot: '/mock/alarm7.jpg',
+    description: '2号电梯运行异常，发出异响',
+    suggestion: '1. 立即停用电梯\n2. 联系维保单位\n3. 张贴提示公告'
+  },
+  {
+    id: 8,
+    time: '2025-01-19 15:10:28',
+    type: '宠物扰民',
+    location: 'H栋3单元',
+    status: '已处理',
+    snapshot: '/mock/alarm8.jpg',
+    description: '业主反映有犬吠声持续影响休息',
+    suggestion: '1. 了解情况\n2. 劝导宠物主人\n3. 加强文明养宠宣传'
+  },
+  {
+    id: 9,
+    time: '2025-01-19 13:35:50',
+    type: '消防隐患',
+    location: 'I栋楼道',
+    status: '处理中',
+    snapshot: '/mock/alarm9.jpg',
+    description: '楼道堆放杂物，占用消防通道',
+    suggestion: '1. 清理杂物\n2. 联系业主\n3. 张贴禁止堆放提示'
+  },
+  {
+    id: 10,
+    time: '2025-01-18 16:05:22',
+    type: '噪音扰民',
+    location: 'J栋1单元',
+    status: '已处理',
+    snapshot: '/mock/alarm10.jpg',
+    description: '装修噪音超出允许时段',
+    suggestion: '1. 现场制止\n2. 告知装修规定\n3. 做好记录备案'
   }
 ])
 
@@ -288,7 +338,7 @@ const cameras = ref([
     location: 'A栋1单元西侧',
     online: true,
     type: '高空抛物',
-    lastUpdate: '2024-03-20 14:35:12'
+    lastUpdate: '2025-01-22 14:35:12'
   },
   {
     id: 2,
@@ -296,7 +346,7 @@ const cameras = ref([
     location: 'A栋1单元大堂',
     online: true,
     type: '人流检测',
-    lastUpdate: '2024-03-20 14:35:10'
+    lastUpdate: '2025-01-21 14:35:10'
   },
   {
     id: 3,
@@ -304,7 +354,7 @@ const cameras = ref([
     location: 'B栋地下车库',
     online: true,
     type: '车辆检测',
-    lastUpdate: '2024-03-20 14:35:08'
+    lastUpdate: '2025-01-21 14:35:08'
   },
   {
     id: 4,
@@ -312,7 +362,7 @@ const cameras = ref([
     location: 'B栋2单元东侧',
     online: false,
     type: '高空抛物',
-    lastUpdate: '2024-03-20 14:30:00'
+    lastUpdate: '2025-01-21 14:30:00'
   },
   {
     id: 5,
@@ -320,7 +370,7 @@ const cameras = ref([
     location: 'C栋楼下广场',
     online: true,
     type: '人流检测',
-    lastUpdate: '2024-03-20 14:35:15'
+    lastUpdate: '2025-01-20 14:35:15'
   },
   {
     id: 6,
@@ -328,7 +378,7 @@ const cameras = ref([
     location: 'D栋3单元北侧',
     online: true,
     type: '高空抛物',
-    lastUpdate: '2024-03-20 14:35:05'
+    lastUpdate: '2025-01-20 14:35:05'
   }
 ])
 

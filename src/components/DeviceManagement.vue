@@ -259,8 +259,8 @@ const devices = ref([
     model: 'HK-2023Pro',
     manufacturer: '海康威视',
     installDate: '2023-06-15',
-    lastMaintenance: '2024-02-15',
-    nextMaintenance: '2024-05-15'
+    lastMaintenance: '2025-01-20',
+    nextMaintenance: '2025-01-15'
   },
   {
     id: 'CAM002',
@@ -271,7 +271,7 @@ const devices = ref([
     model: 'HK-2023Pro',
     manufacturer: '海康威视',
     installDate: '2023-06-15',
-    lastMaintenance: '2024-02-16',
+    lastMaintenance: '2025-01-16',
     nextMaintenance: '2024-05-16'
   },
   {
@@ -283,7 +283,7 @@ const devices = ref([
     model: 'DH-8000A',
     manufacturer: '大华',
     installDate: '2023-07-20',
-    lastMaintenance: '2024-02-20',
+    lastMaintenance: '2025-01-20',
     nextMaintenance: '2024-05-20'
   },
   {
@@ -295,7 +295,7 @@ const devices = ref([
     model: 'DH-8000A',
     manufacturer: '大华',
     installDate: '2023-08-15',
-    lastMaintenance: '2024-02-25',
+    lastMaintenance: '2025-01-22',
     nextMaintenance: '2024-05-25'
   },
   {
@@ -307,7 +307,7 @@ const devices = ref([
     model: 'HK-2023Pro',
     manufacturer: '海康威视',
     installDate: '2023-09-01',
-    lastMaintenance: '2024-03-01',
+    lastMaintenance: '2025-01-01',
     nextMaintenance: '2024-06-01'
   },
   {
@@ -319,7 +319,7 @@ const devices = ref([
     model: 'DH-8000A',
     manufacturer: '大华',
     installDate: '2023-09-15',
-    lastMaintenance: '2024-03-05',
+    lastMaintenance: '2025-01-05',
     nextMaintenance: '2024-06-05'
   },
   {
@@ -331,7 +331,7 @@ const devices = ref([
     model: 'HK-2023Pro',
     manufacturer: '海康威视',
     installDate: '2023-10-01',
-    lastMaintenance: '2024-03-20',
+    lastMaintenance: '2025-01-20',
     nextMaintenance: '2024-06-20'
   },
   {
@@ -343,7 +343,7 @@ const devices = ref([
     model: 'DH-8000A',
     manufacturer: '大华',
     installDate: '2023-10-15',
-    lastMaintenance: '2024-03-10',
+    lastMaintenance: '2025-01-10',
     nextMaintenance: '2024-06-10'
   },
   {
@@ -355,7 +355,7 @@ const devices = ref([
     model: 'HK-2023Pro',
     manufacturer: '海康威视',
     installDate: '2023-11-01',
-    lastMaintenance: '2024-03-15',
+    lastMaintenance: '2025-01-15',
     nextMaintenance: '2024-06-15'
   },
   {
@@ -367,7 +367,7 @@ const devices = ref([
     model: 'HK-2023Pro',
     manufacturer: '海康威视',
     installDate: '2023-11-01',
-    lastMaintenance: '2024-03-15',
+    lastMaintenance: '2025-01-15',
     nextMaintenance: '2024-06-15'
   },
   {
@@ -379,7 +379,7 @@ const devices = ref([
     model: 'TL-3000',
     manufacturer: '通力电梯',
     installDate: '2022-12-01',
-    lastMaintenance: '2024-02-01',
+    lastMaintenance: '2025-01-01',
     nextMaintenance: '2024-05-01'
   },
   {
@@ -391,7 +391,7 @@ const devices = ref([
     model: 'TL-3000',
     manufacturer: '通力电梯',
     installDate: '2022-12-01',
-    lastMaintenance: '2024-03-20',
+    lastMaintenance: '2025-01-20',
     nextMaintenance: '2024-06-20'
   },
   {
@@ -403,7 +403,7 @@ const devices = ref([
     model: 'XD-2800',
     manufacturer: '迅达电梯',
     installDate: '2023-01-15',
-    lastMaintenance: '2024-02-10',
+    lastMaintenance: '2025-01-10',
     nextMaintenance: '2024-05-10'
   },
   {
@@ -415,7 +415,7 @@ const devices = ref([
     model: 'XD-2800',
     manufacturer: '迅达电梯',
     installDate: '2023-01-15',
-    lastMaintenance: '2024-02-12',
+    lastMaintenance: '2025-01-12',
     nextMaintenance: '2024-05-12'
   },
   {
@@ -427,7 +427,7 @@ const devices = ref([
     model: 'MS-2000',
     manufacturer: '三菱电梯',
     installDate: '2023-02-01',
-    lastMaintenance: '2024-02-15',
+    lastMaintenance: '2025-01-15',
     nextMaintenance: '2024-05-15'
   },
   {
@@ -439,7 +439,7 @@ const devices = ref([
     model: 'MS-2000',
     manufacturer: '三菱电梯',
     installDate: '2023-02-01',
-    lastMaintenance: '2024-02-18',
+    lastMaintenance: '2025-01-18',
     nextMaintenance: '2024-05-18'
   },
   {
@@ -451,7 +451,7 @@ const devices = ref([
     model: 'HK-2023Pro',
     manufacturer: '海康威视',
     installDate: '2023-11-05',
-    lastMaintenance: '2024-03-15',
+    lastMaintenance: '2025-01-15',
     nextMaintenance: '2024-06-15'
   },
   {
@@ -463,7 +463,7 @@ const devices = ref([
     model: 'HK-2023Pro',
     manufacturer: '海康威视',
     installDate: '2023-11-05',
-    lastMaintenance: '2024-03-15',
+    lastMaintenance: '2025-01-15',
     nextMaintenance: '2024-06-15'
   },
   {
@@ -475,7 +475,7 @@ const devices = ref([
     model: 'DH-8000A',
     manufacturer: '大华',
     installDate: '2023-11-10',
-    lastMaintenance: '2024-03-10',
+    lastMaintenance: '2025-01-10',
     nextMaintenance: '2024-06-10'
   },
   {
@@ -487,7 +487,7 @@ const devices = ref([
     model: 'DH-8000A',
     manufacturer: '大华',
     installDate: '2023-11-10',
-    lastMaintenance: '2024-03-10',
+    lastMaintenance: '2025-01-10',
     nextMaintenance: '2024-06-10'
   },
   {
@@ -499,7 +499,7 @@ const devices = ref([
     model: 'HK-2023Pro',
     manufacturer: '海康威视',
     installDate: '2023-11-15',
-    lastMaintenance: '2024-03-15',
+    lastMaintenance: '2025-01-15',
     nextMaintenance: '2024-06-15'
   },
   {
@@ -511,7 +511,7 @@ const devices = ref([
     model: 'DH-8000A',
     manufacturer: '大华',
     installDate: '2023-11-15',
-    lastMaintenance: '2024-03-15',
+    lastMaintenance: '2025-01-15',
     nextMaintenance: '2024-06-15'
   },
   {
@@ -523,7 +523,7 @@ const devices = ref([
     model: 'HK-2023Pro',
     manufacturer: '海康威视',
     installDate: '2023-11-20',
-    lastMaintenance: '2024-03-20',
+    lastMaintenance: '2025-01-20',
     nextMaintenance: '2024-06-20'
   },
   {
@@ -535,7 +535,7 @@ const devices = ref([
     model: 'DH-8000A',
     manufacturer: '大华',
     installDate: '2023-11-20',
-    lastMaintenance: '2024-03-20',
+    lastMaintenance: '2025-01-20',
     nextMaintenance: '2024-06-20'
   },
   {
@@ -547,7 +547,7 @@ const devices = ref([
     model: 'HK-2023Pro',
     manufacturer: '海康威视',
     installDate: '2023-11-25',
-    lastMaintenance: '2024-03-20',
+    lastMaintenance: '2025-01-20',
     nextMaintenance: '2024-06-20'
   },
   {
@@ -559,7 +559,7 @@ const devices = ref([
     model: 'DH-8000A',
     manufacturer: '大华',
     installDate: '2023-11-25',
-    lastMaintenance: '2024-03-20',
+    lastMaintenance: '2025-01-20',
     nextMaintenance: '2024-06-20'
   },
   {
@@ -571,7 +571,7 @@ const devices = ref([
     model: 'MS-2000',
     manufacturer: '三菱电梯',
     installDate: '2023-02-15',
-    lastMaintenance: '2024-02-20',
+    lastMaintenance: '2025-01-20',
     nextMaintenance: '2024-05-20'
   },
   {
@@ -583,7 +583,7 @@ const devices = ref([
     model: 'MS-2000',
     manufacturer: '三菱电梯',
     installDate: '2023-02-15',
-    lastMaintenance: '2024-02-20',
+    lastMaintenance: '2025-01-20',
     nextMaintenance: '2024-05-20'
   },
   {
@@ -595,7 +595,7 @@ const devices = ref([
     model: 'HK-2023Pro',
     manufacturer: '海康威视',
     installDate: '2023-12-01',
-    lastMaintenance: '2024-03-01',
+    lastMaintenance: '2025-01-01',
     nextMaintenance: '2024-06-01'
   },
   {
@@ -607,7 +607,7 @@ const devices = ref([
     model: 'HK-2023Pro',
     manufacturer: '海康威视',
     installDate: '2023-12-01',
-    lastMaintenance: '2024-03-01',
+    lastMaintenance: '2025-01-01',
     nextMaintenance: '2024-06-01'
   }
 ])

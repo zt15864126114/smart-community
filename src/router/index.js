@@ -15,6 +15,9 @@ import VideoShare from "../components/VideoShare.vue";
 import EventReview from "../components/EventReview.vue";
 import VideoDispatch from "../components/VideoDispatch.vue";
 import VideoAnalysis from '../components/VideoAnalysis.vue'
+import VideoNetwork from "../components/VideoNetwork.vue";
+import DispatchCenter from "../components/DispatchCenter.vue";
+import Welcome from "../components/Welcome.vue";
 
 const routes = [
   {
@@ -100,7 +103,22 @@ const routes = [
     path: '/smart-community/videoanalysis',
     name: 'VideoAnalysis',
     component: VideoAnalysis
-  }
+  },
+  {
+    path: '/smart-community/videonetwork',
+    name: 'VideoNetwork',
+    component: VideoNetwork
+  },
+  {
+    path: '/smart-community/dispatchcenter',
+    name: 'DispatchCenter',
+    component: DispatchCenter
+  },
+  {
+    path: '/smart-community/welcome',
+    name: 'Welcome',
+    component: Welcome
+  },
 ]
 
 export const router = createRouter({

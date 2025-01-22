@@ -13,9 +13,17 @@
         background-color="#001529"
         text-color="rgba(255,255,255,0.65)"
         active-text-color="#fff">
+        <el-menu-item index="/smart-community/welcome">
+          <el-icon><HomeFilled /></el-icon>
+          <span>欢迎</span>
+        </el-menu-item>
         <el-menu-item index="/smart-community/dashboard">
           <el-icon><DataBoard /></el-icon>
           <span>数据概览</span>
+        </el-menu-item>
+        <el-menu-item index="/smart-community/dispatchcenter">
+          <el-icon><Operation /></el-icon>
+          <span>调度台</span>
         </el-menu-item>
         <el-menu-item index="/smart-community/monitoring">
           <el-icon><VideoCamera /></el-icon>
@@ -37,6 +45,10 @@
           <el-icon><DataAnalysis /></el-icon>
           <span>智能分析</span>
         </el-menu-item>
+        <el-menu-item index="/smart-community/videonetwork">
+          <el-icon><Connection /></el-icon>
+          <span>联网汇聚</span>
+        </el-menu-item>
         <el-menu-item index="/smart-community/elevator">
           <el-icon><Connection /></el-icon>
           <span>电梯管理</span>
@@ -49,22 +61,22 @@
           <el-icon><Connection /></el-icon>
           <span>设备管理</span>
         </el-menu-item>
-        <el-menu-item index="/smart-community/users">
-          <el-icon><User /></el-icon>
-          <span>用户管理</span>
-        </el-menu-item>
-        <el-menu-item index="/smart-community/visitor">
-          <el-icon><User /></el-icon>
-          <span>访客管理</span>
-        </el-menu-item>
-        <el-menu-item index="/smart-community/vehicle">
-          <el-icon><Van /></el-icon>
-          <span>车辆管理</span>
-        </el-menu-item>
-        <el-menu-item index="/smart-community/settings">
-          <el-icon><Setting /></el-icon>
-          <span>系统设置</span>
-        </el-menu-item>
+<!--        <el-menu-item index="/smart-community/users">-->
+<!--          <el-icon><User /></el-icon>-->
+<!--          <span>用户管理</span>-->
+<!--        </el-menu-item>-->
+<!--        <el-menu-item index="/smart-community/visitor">-->
+<!--          <el-icon><User /></el-icon>-->
+<!--          <span>访客管理</span>-->
+<!--        </el-menu-item>-->
+<!--        <el-menu-item index="/smart-community/vehicle">-->
+<!--          <el-icon><Van /></el-icon>-->
+<!--          <span>车辆管理</span>-->
+<!--        </el-menu-item>-->
+<!--        <el-menu-item index="/smart-community/settings">-->
+<!--          <el-icon><Setting /></el-icon>-->
+<!--          <span>系统设置</span>-->
+<!--        </el-menu-item>-->
       </el-menu>
     </el-aside>
     
@@ -115,13 +127,11 @@ import {
   Warning,
   Fold,
   Expand,
-  User,
-  Setting,
-  Van,
   Share,
   Document,
   Operation,
-  DataAnalysis
+  DataAnalysis,
+  HomeFilled
 } from '@element-plus/icons-vue'
 
 const route = useRoute()
@@ -141,7 +151,10 @@ const currentRoute = computed(() => {
     '/smart-community/videoshare': '视频共享',
     '/smart-community/eventreview': '事件回顾',
     '/smart-community/videodispatch': '视频调度',
-    '/smart-community/videoanalysis': '智能分析'
+    '/smart-community/videoanalysis': '智能分析',
+    '/smart-community/videonetwork': '联网汇聚',
+    '/smart-community/dispatchcenter': '调度台',
+    '/smart-community/welcome': '欢迎'
   }
   return routeMap[route.path] || '首页'
 })

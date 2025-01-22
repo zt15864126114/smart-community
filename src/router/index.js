@@ -14,6 +14,7 @@ import VehicleManagement from '../components/VehicleManagement.vue'
 import VideoShare from "../components/VideoShare.vue";
 import EventReview from "../components/EventReview.vue";
 import VideoDispatch from "../components/VideoDispatch.vue";
+import VideoAnalysis from '../components/VideoAnalysis.vue'
 
 const routes = [
   {
@@ -95,6 +96,11 @@ const routes = [
     name: 'VideoDispatch',
     component: VideoDispatch
   },
+  {
+    path: '/smart-community/videoanalysis',
+    name: 'VideoAnalysis',
+    component: VideoAnalysis
+  }
 ]
 
 export const router = createRouter({

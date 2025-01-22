@@ -33,6 +33,10 @@
           <el-icon><Operation /></el-icon>
           <span>视频调度</span>
         </el-menu-item>
+        <el-menu-item index="/smart-community/videoanalysis">
+          <el-icon><DataAnalysis /></el-icon>
+          <span>智能分析</span>
+        </el-menu-item>
         <el-menu-item index="/smart-community/elevator">
           <el-icon><Connection /></el-icon>
           <span>电梯管理</span>
@@ -116,7 +120,8 @@ import {
   Van,
   Share,
   Document,
-  Operation
+  Operation,
+  DataAnalysis
 } from '@element-plus/icons-vue'
 
 const route = useRoute()
@@ -135,7 +140,8 @@ const currentRoute = computed(() => {
     '/smart-community/vehicle': '车辆管理',
     '/smart-community/videoshare': '视频共享',
     '/smart-community/eventreview': '事件回顾',
-    '/smart-community/videodispatch': '视频调度'
+    '/smart-community/videodispatch': '视频调度',
+    '/smart-community/videoanalysis': '智能分析'
   }
   return routeMap[route.path] || '首页'
 })

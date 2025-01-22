@@ -22,7 +22,7 @@ import Welcome from "../components/Welcome.vue";
 const routes = [
   {
     path: '/',
-    redirect: '/smart-community/dashboard'  // 修改重定向路径
+    redirect: '/smart-community/welcome'  // 修改重定向路径
   },
   {
     path: '/smart-community/dashboard',     // 添加基础路径

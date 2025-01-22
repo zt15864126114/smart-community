@@ -19,7 +19,7 @@
         </el-menu-item>
         <el-menu-item index="/smart-community/monitoring">
           <el-icon><VideoCamera /></el-icon>
-          <span>视频监控</span>
+          <span>视频广场</span>
         </el-menu-item>
         <el-menu-item index="/smart-community/elevator">
           <el-icon><Connection /></el-icon>
@@ -37,10 +37,6 @@
           <el-icon><User /></el-icon>
           <span>用户管理</span>
         </el-menu-item>
-        <el-menu-item index="/smart-community/settings">
-          <el-icon><Setting /></el-icon>
-          <span>系统设置</span>
-        </el-menu-item>
         <el-menu-item index="/smart-community/visitor">
           <el-icon><User /></el-icon>
           <span>访客管理</span>
@@ -48,6 +44,10 @@
         <el-menu-item index="/smart-community/vehicle">
           <el-icon><Van /></el-icon>
           <span>车辆管理</span>
+        </el-menu-item>
+        <el-menu-item index="/smart-community/settings">
+          <el-icon><Setting /></el-icon>
+          <span>系统设置</span>
         </el-menu-item>
       </el-menu>
     </el-aside>

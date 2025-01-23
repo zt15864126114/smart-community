@@ -84,38 +84,19 @@
               @click="handleVideoClick(n - 1)"
               :class="{ active: currentVideoIndex === n - 1 }"
             >
-              <div class="video-placeholder" v-if="!videos[n-1]">
-                <el-icon><VideoCamera /></el-icon>
-                <span>无视频信号</span>
+              <div class="video-content">
+                <img 
+                  :src="defaultImages[n-1]"
+                  class="video-image"
+                  alt="监控画面"
+                  @error="handleImageError"
+                  @load="handleImageLoad"
+                />
+                <div class="video-info">
+                  <span>监控画面 {{n}}</span>
+                  <span>默认位置 {{n}}</span>
+                </div>
               </div>
-              <template v-else>
-                <div class="video-content">
-                  <div class="mock-video">模拟视频画面 {{ n }}</div>
-                  <div class="video-info">
-                    <span>{{ videos[n-1].name }}</span>
-                    <span>{{ videos[n-1].location }}</span>
-                  </div>
-                </div>
-                <div class="video-controls">
-                  <el-button-group>
-                    <el-button 
-                      size="small" 
-                      :icon="VideoPlay"
-                      @click.stop="playVideo(n-1)"
-                    />
-                    <el-button 
-                      size="small" 
-                      :icon="VideoPause"
-                      @click.stop="pauseVideo(n-1)"
-                    />
-                    <el-button 
-                      size="small" 
-                      :icon="Camera"
-                      @click.stop="snapshot(n-1)"
-                    />
-                  </el-button-group>
-                </div>
-              </template>
             </div>
           </div>
         </el-card>
@@ -196,7 +177,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { 
   VideoPlay, 
   VideoPause, 
@@ -561,6 +542,20 @@ const presetPoints = [
   { value: '6', label: '车库入口' }
 ]
 
+// 修改 defaultImages 数组
+const defaultImages = [
+  '/smart-community/images/camera/1.jpg',
+  '/smart-community/images/camera/2.jpg',
+  '/smart-community/images/camera/3.png',
+  '/smart-community/images/camera/default4.png',
+  '/smart-community/images/camera/default4.png',
+  '/smart-community/images/camera/default6.png',
+  '/smart-community/images/camera/default5.png',
+  '/smart-community/images/camera/default6.png',
+  '/smart-community/images/camera/default6.png'
+
+]
+
 // 处理设备树节点点击
 const handleNodeClick = (data) => {
   if (data.type === 'camera') {
@@ -662,6 +657,31 @@ const savePreset = () => {
     ElMessage.success(`${camera.name} - 设置预置点：${preset.label}`)
   }
 }
+
+const handleImageError = (e) => {
+  console.error('图片加载失败:', e.target.src)
+  // 打印完整的图片URL
+  console.log('完整URL:', new URL(e.target.src, window.location.href).href)
+}
+
+const handleImageLoad = (e) => {
+  console.log('图片加载成功:', e.target.src)
+}
+
+// 测试图片是否存在
+const testImageUrls = () => {
+  defaultImages.forEach(url => {
+    const img = new Image()
+    img.onload = () => console.log('图片存在:', url)
+    img.onerror = () => console.error('图片不存在:', url)
+    img.src = url
+  })
+}
+
+// 组件挂载时测试图片
+onMounted(() => {
+  testImageUrls()
+})
 </script>
 
 <style scoped>
@@ -753,24 +773,21 @@ const savePreset = () => {
   position: relative;
 }
 
-.mock-video {
+.video-image {
+  width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 18px;
+  object-fit: cover;
 }
 
 .video-info {
   position: absolute;
   top: 10px;
   left: 10px;
-  color: #fff;
-  text-shadow: 0 0 2px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  color: #fff;
+  text-shadow: 0 0 2px rgba(0,0,0,0.5);
+  z-index: 1;
 }
 
 .video-controls {

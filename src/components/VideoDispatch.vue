@@ -111,39 +111,30 @@
       <!-- 视频画面 -->
       <div class="video-container">
         <div class="video-box">
-          <!-- 未选择摄像头 -->
-          <div v-if="!selectedCamera" class="placeholder-text">
-            <el-icon><VideoCamera /></el-icon>
-            <span>请选择监控点</span>
-          </div>
-          <!-- 连接中状态 - 包括正在连接在线摄像头 -->
-          <div v-else-if="selectedCamera.status === 'connecting' || (selectedCamera.status === 'online' && isConnecting)" 
-               class="placeholder-text connecting">
-            <el-icon class="is-loading"><Loading /></el-icon>
-            <span>正在连接摄像头...</span>
-            <div class="camera-info">
-              <p>{{ selectedCamera.label }} ({{ selectedCamera.ip }})</p>
-              <p>型号: {{ selectedCamera.model }}</p>
+          <div class="video-player">
+            <img 
+              :src="currentImage"
+              class="camera-image"
+              alt="监控画面"
+            />
+            <!-- 左上角摄像头信息 -->
+            <div class="camera-status">
+              <div class="status-dot"></div>
+              <span>实时监控</span>
             </div>
-          </div>
-          <!-- 离线状态 -->
-          <div v-else-if="selectedCamera.status === 'offline'" class="placeholder-text">
-            <el-icon><VideoCamera /></el-icon>
-            <span>摄像头离线</span>
-            <div class="camera-info">
-              <p>{{ selectedCamera.label }} ({{ selectedCamera.ip }})</p>
-              <p>型号: {{ selectedCamera.model }}</p>
+            <!-- 右上角时间戳 -->
+            <div class="timestamp">
+              {{ currentTime }}
             </div>
-          </div>
-          <!-- 在线且连接成功状态 -->
-          <div v-else class="video-player">
-            <div class="camera-title">
-              {{ selectedCamera.label }}
-              <el-tag size="small" type="success">在线</el-tag>
+            <!-- 左下角位置信息 -->
+            <div class="location-info">
+              <span>{{ selectedCamera ? selectedCamera.label : '默认监控点' }}</span>
+              <span>{{ selectedCamera ? selectedCamera.location : '默认位置' }}</span>
             </div>
-            <div class="camera-info">
-              <span>IP: {{ selectedCamera.ip }}</span>
-              <span>型号: {{ selectedCamera.model }}</span>
+            <!-- 右下角设备信息 -->
+            <div class="device-info">
+              <span>设备编号: {{ selectedCamera ? selectedCamera.id : 'Camera_01' }}</span>
+              <span>分辨率: 1920×1080</span>
             </div>
           </div>
         </div>
@@ -212,12 +203,30 @@ const ptzSpeed = ref(5)
 // 添加连接状态控制
 const isConnecting = ref(false)
 
+// 添加默认监控画面数组
+const defaultImages = [
+  '/smart-community/images/camera/1.jpg',
+  '/smart-community/images/camera/2.jpg',
+  '/smart-community/images/camera/3.png',
+  '/smart-community/images/camera/default4.png',
+  '/smart-community/images/camera/default5.png',
+  '/smart-community/images/camera/default6.png'
+]
+
+// 默认显示第一张图片
+const currentImage = ref(defaultImages[0])
+
+// 添加当前时间显示
+const currentTime = ref('')
+
 // 初始化数据
 onMounted(() => {
   // 加载摄像头数据
   cameraList.value = getCameraData()
   // 加载系统状态
   systemStatus.value = getSystemStatus()
+  updateTime()
+  setInterval(updateTime, 1000)
 })
 
 // 树形控件配置
@@ -230,6 +239,9 @@ const defaultProps = {
 const handleCameraSelect = (data) => {
   if (data.type === 'camera') {
     selectedCamera.value = data
+    // 根据摄像头ID选择不同的图片
+    const index = parseInt(data.id) % defaultImages.length
+    currentImage.value = defaultImages[index]
     if (data.status === 'online') {
       // 选中在线摄像头时，显示连接中状态
       isConnecting.value = true
@@ -271,6 +283,20 @@ const handlePTZ = (direction) => {
   ElMessage({
     message: `云台控制: ${direction}, 速度: ${ptzSpeed.value}`,
     type: 'success'
+  })
+}
+
+// 更新时间
+const updateTime = () => {
+  const now = new Date()
+  currentTime.value = now.toLocaleString('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
   })
 }
 </script>
@@ -379,10 +405,10 @@ const handlePTZ = (direction) => {
 
 .video-container {
   flex: 1;
-  background: #fff;
+  background: #1e1e1e;
   border-radius: 8px;
-  padding: 15px;
-  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .video-box {
@@ -390,46 +416,97 @@ const handlePTZ = (direction) => {
   height: 100%;
   background: #000;
   border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: hidden;
+  position: relative;
 }
 
 .video-player {
   width: 100%;
   height: 100%;
+  position: relative;
+}
+
+.camera-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+/* 摄像头状态样式 */
+.camera-status {
+  position: absolute;
+  top: 16px;
+  left: 16px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   color: #fff;
-  padding: 20px;
-}
-
-.camera-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.camera-info {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
   font-size: 14px;
-  color: #909399;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 
-.placeholder-text {
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #67c23a;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #67c23a;
+  animation: pulse 2s infinite;
+}
+
+/* 时间戳样式 */
+.timestamp {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: #fff;
+  font-family: monospace;
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* 位置信息样式 */
+.location-info {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  color: #909399;
+  gap: 4px;
+  color: #fff;
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 
-.placeholder-text .el-icon {
-  font-size: 48px;
+/* 设备信息样式 */
+.device-info {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  color: #fff;
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* 添加闪烁动画 */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .ptz-control {

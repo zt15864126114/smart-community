@@ -113,34 +113,24 @@
         <!-- 视频预览区域 -->
         <div class="video-preview">
           <div class="video-box">
-            <!-- 未选择摄像头 -->
-            <div v-if="!selectedCamera" class="placeholder-text">
-              <el-icon><VideoCamera /></el-icon>
-              <span>请选择监控点</span>
-            </div>
-            <!-- 连接中状态 -->
-            <div v-else-if="isConnecting" class="placeholder-text connecting">
-              <el-icon class="is-loading"><Loading /></el-icon>
-              <span>正在连接摄像头...</span>
-              <div class="camera-info">
-                <p>{{ selectedCamera.label }}</p>
-                <p>IP: {{ selectedCamera.ip }}</p>
+            <div class="video-player">
+              <img 
+                :src="currentImage"
+                class="video-image"
+                alt="监控画面"
+              />
+              <!-- 顶部信息栏 -->
+              <div class="video-header">
+                <div class="camera-title">
+                  <span>{{ selectedCamera ? selectedCamera.label : '默认监控画面' }}</span>
+                  <el-tag size="small" type="success">在线</el-tag>
+                </div>
+                <span class="time-info">{{ currentTime }}</span>
               </div>
-            </div>
-            <!-- 离线状态 -->
-            <div v-else-if="selectedCamera.status === 'offline'" class="placeholder-text">
-              <el-icon><VideoCamera /></el-icon>
-              <span>摄像头离线</span>
-              <div class="camera-info">
-                <p>{{ selectedCamera.label }}</p>
-                <p>IP: {{ selectedCamera.ip }}</p>
-              </div>
-            </div>
-            <!-- 在线状态 -->
-            <div v-else class="video-player">
-              <div class="camera-info">
-                <span class="camera-name">{{ selectedCamera.label }}</span>
-                <el-tag size="small" type="success">在线</el-tag>
+              <!-- 底部信息栏 -->
+              <div class="video-footer">
+                <span>{{ selectedCamera ? `位置: ${selectedCamera.location}` : '默认位置' }}</span>
+                <span>设备编号: Camera 01</span>
               </div>
             </div>
           </div>
@@ -275,10 +265,42 @@ const analysisStatus = ref({
   gpuUsage: '85%'
 })
 
+// 添加默认监控画面数组
+const defaultImages = [
+  '/smart-community/images/camera/2.jpg',
+  '/smart-community/images/camera/1.jpg',
+  '/smart-community/images/camera/3.png',
+  '/smart-community/images/camera/default4.png',
+  '/smart-community/images/camera/default5.png',
+  '/smart-community/images/camera/default6.png'
+]
+
+// 默认显示第一张图片
+const currentImage = ref(defaultImages[0])
+
+// 添加当前时间显示
+const currentTime = ref('')
+
+// 更新时间
+const updateTime = () => {
+  const now = new Date()
+  currentTime.value = now.toLocaleString('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  })
+}
+
 // 初始化数据
 onMounted(() => {
   cameraList.value = getCameraData()
   systemStatus.value = getSystemStatus()
+  updateTime()
+  setInterval(updateTime, 1000)
 })
 
 // 树形控件配置
@@ -291,27 +313,14 @@ const defaultProps = {
 const handleCameraSelect = (data) => {
   if (data.type === 'camera') {
     selectedCamera.value = data
+    // 根据摄像头ID选择不同的图片
+    const index = parseInt(data.id) % defaultImages.length
+    currentImage.value = defaultImages[index]
+    
     if (data.status === 'online') {
-      // 显示连接中状态
-      isConnecting.value = true
-      ElMessage({
-        message: `正在连接: ${data.label}`,
-        type: 'info'
-      })
-      
-      // 模拟连接过程
-      setTimeout(() => {
-        isConnecting.value = false
-        ElMessage({
-          message: `已连接: ${data.label}`,
-          type: 'success'
-        })
-      }, 2000)
+      ElMessage.success(`已连接: ${data.label}`)
     } else {
-      ElMessage({
-        message: `${data.label} 离线`,
-        type: 'warning'
-      })
+      ElMessage.warning(`${data.label} 离线`)
     }
   }
 }
@@ -377,6 +386,7 @@ watch(currentAnalysis, () => {
   grid-template-columns: 2fr 1fr;
   gap: 15px;
   flex: 1;
+  min-height: 0; /* 防止溢出 */
 }
 
 .video-preview {
@@ -384,26 +394,80 @@ watch(currentAnalysis, () => {
   border-radius: 8px;
   padding: 15px;
   box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
 }
 
 .video-box {
+  flex: 1;
+  position: relative;
   width: 100%;
-  height: 100%;
+  padding-bottom: 56.25%; /* 16:9 比例 */
   background: #000;
   border-radius: 4px;
+  overflow: hidden;
+}
+
+.video-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.video-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+  color: #fff;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+}
+
+.camera-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.time-info {
+  font-family: monospace;
+  font-size: 14px;
+}
+
+.video-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
 }
 
 .analysis-result {
   background: #fff;
   border-radius: 8px;
-  padding: 12px;
+  padding: 15px;
   box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  height: 100%;
+  overflow: auto;
 }
 
 .result-header {
@@ -541,27 +605,25 @@ watch(currentAnalysis, () => {
 }
 
 .camera-info {
-  text-align: center;
-  margin-top: 10px;
-  color: #909399;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+  color: #fff;
+  z-index: 1;
 }
 
 .camera-info p {
   margin: 5px 0;
 }
 
-.video-player {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: #fff;
-  padding: 20px;
-}
-
 .camera-name {
-  margin-right: 10px;
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
 }
 
 .analyzing {

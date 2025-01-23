@@ -89,12 +89,25 @@
                   :src="defaultImages[n-1]"
                   class="video-image"
                   alt="监控画面"
-                  @error="handleImageError"
-                  @load="handleImageLoad"
                 />
-                <div class="video-info">
+                <!-- 左上角摄像头信息 -->
+                <div class="camera-status">
+                  <div class="status-dot"></div>
+                  <span>实时监控</span>
+                </div>
+                <!-- 右上角时间戳 -->
+                <div class="timestamp">
+                  {{ currentTime }}
+                </div>
+                <!-- 左下角位置信息 -->
+                <div class="location-info">
                   <span>监控画面 {{n}}</span>
                   <span>默认位置 {{n}}</span>
+                </div>
+                <!-- 右下角设备信息 -->
+                <div class="device-info">
+                  <span>设备编号: Camera_{{n.toString().padStart(2, '0')}}</span>
+                  <span>分辨率: 1920×1080</span>
                 </div>
               </div>
             </div>
@@ -678,9 +691,28 @@ const testImageUrls = () => {
   })
 }
 
+// 添加当前时间显示
+const currentTime = ref('')
+
+// 更新时间
+const updateTime = () => {
+  const now = new Date()
+  currentTime.value = now.toLocaleString('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  })
+}
+
 // 组件挂载时测试图片
 onMounted(() => {
   testImageUrls()
+  updateTime()
+  setInterval(updateTime, 1000)
 })
 </script>
 
@@ -769,14 +801,17 @@ onMounted(() => {
 }
 
 .video-content {
-  height: 100%;
   position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000;
 }
 
 .video-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  background: #000;
 }
 
 .video-info {
@@ -842,5 +877,91 @@ onMounted(() => {
 
 .el-button-group .el-button {
   margin-left: -1px;
+}
+
+/* 摄像头状态样式 */
+.camera-status {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  z-index: 1;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #67c23a;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #67c23a;
+  animation: pulse 2s infinite;
+}
+
+/* 时间戳样式 */
+.timestamp {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: #fff;
+  font-family: monospace;
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  z-index: 1;
+}
+
+/* 位置信息样式 */
+.location-info {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #fff;
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  z-index: 1;
+}
+
+/* 设备信息样式 */
+.device-info {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  color: #fff;
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  z-index: 1;
+}
+
+/* 添加闪烁动画 */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 选中状态的视频窗口 */
+.video-item.active {
+  border: 2px solid var(--el-color-primary);
+  border-radius: 4px;
 }
 </style> 

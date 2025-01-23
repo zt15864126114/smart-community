@@ -544,15 +544,15 @@ const presetPoints = [
 
 // 修改 defaultImages 数组
 const defaultImages = [
-  '/smart-community/images/camera/1.jpg',
-  '/smart-community/images/camera/2.jpg',
-  '/smart-community/images/camera/3.png',
-  '/smart-community/images/camera/default4.png',
-  '/smart-community/images/camera/default4.png',
-  '/smart-community/images/camera/default6.png',
-  '/smart-community/images/camera/default5.png',
-  '/smart-community/images/camera/default6.png',
-  '/smart-community/images/camera/default6.png'
+  '/smart-community/images/camera/222.jpg',
+  '/smart-community/images/camera/333.jpg',
+  '/smart-community/images/camera/444.png',
+  '/smart-community/images/camera/555.png',
+  '/smart-community/images/camera/555.png',
+  '/smart-community/images/camera/888.png',
+  '/smart-community/images/camera/777.png',
+  '/smart-community/images/camera/888.png',
+  '/smart-community/images/camera/888.png'
 
 ]
 
